@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+<head>
+    <title>{% block title %}Create Ticket{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+
+{% block content %}
+<section class="form-section">
+    <h1>Create a Ticket</h1>
+
+    <!-- Display form errors -->
+    {% if form.errors %}
+        <div class="form-errors">
+            <ul>
+                {% for field in form %}
+                    {% for error in field.errors %}
+                        <li>{{ field.label }}: {{ error }}</li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    <div class="form-container">
+        <form method="post" class="ticket-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn-submit">Create Ticket</button>
+        </form>
+    </div>
+</section>
+{% endblock %}
